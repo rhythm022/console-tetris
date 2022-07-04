@@ -1,4 +1,3 @@
-const tty = require('tty')
 const ttys = require('ttys')
 
 const stdin = ttys.stdin

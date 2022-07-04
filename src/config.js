@@ -1,4 +1,4 @@
- const gameRow = 18;
+ const gameRow = 9;
  const gameCol = 18;
 
  const gameDownIntervalTime = 1000;
