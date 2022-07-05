@@ -2,7 +2,7 @@ const { rotate} = require('./matrix')
 class Box {
   constructor(shape,rotateStrategys) {
     this.x = 0;
-    this.y = 0;
+    this.y = -1;
     this.rotateIndex = 0;
 
     this.shape = shape
@@ -11,6 +11,8 @@ class Box {
 
   
   rotate() {
+    if(!this.rotateStrategys) return 
+
     const rotate = this.rotateStrategys[this.rotateIndex];
 
     this.shape = rotate(this.shape);
@@ -21,19 +23,48 @@ class Box {
 
 
 const boxInfos = {
+  // 1: {
+  //   shape: [
+  //     [1,1,0,0],
+  //     [1,1,1,1],
+  //     [0,0,1,1],
+  //     [0,0,0,0]
+  //   ],
+  //   // 90 -> 270
+  //   rotateStrategy: [
+  //     ()=>   
+  //     [
+  //       [1,1,0,0],
+  //       [1,1,1,1],
+  //       [0,0,1,1],
+  //       [0,0,0,0]
+  //     ],
+  //     ()=>   
+  //     [
+  //     [0,0,1,1,1,1],
+  //     [1,1,1,1,0,0],
+  //     [0,0,0,0,0,0],
+  //     [0,0,0,0,0,0],
+  //     [0,0,0,0,0,0],
+  //     [0,0,0,0,0,0],
+  //     ],
+  //     ()=> 
+  //     [
+  //     [1,1,1,1,0,0],
+  //     [0,0,1,1,1,1],
+  //     [0,0,0,0,0,0],
+  //     [0,0,0,0,0,0],
+  //     [0,0,0,0,0,0],
+  //     [0,0,0,0,0,0],
+  //     ],
+  // ],
+  // },
   1: {
     shape: [
-      [1, 0, 0],
-      [1, 1, 0],
-      [0, 1, 0],
-    ],
-    // 90 -> 270
-    rotateStrategy: [rotate, (v) => rotate(rotate(rotate(v)))],
-  },
-  2: {
-    shape: [
-      [1, 1],
-      [1, 1],
+      [1, 1,1,1],
+      [1, 1,1,1],
+      [0, 0,0,0],
+      [0, 0,0,0],
     ],
   },
 };

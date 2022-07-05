@@ -1,8 +1,8 @@
- function intervalTimer() {
+ function intervaler(time) {
   let t = 0;
-  return (n, intervalTime) => {
+  return (n) => {
     t += n;
-    if (t >= intervalTime) {
+    if (t >= time) {
       t = 0;
       return true;
     }
@@ -12,5 +12,5 @@
 
 
 module.exports = {
-  intervalTimer
+  intervaler
 }

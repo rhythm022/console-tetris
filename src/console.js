@@ -9,18 +9,18 @@ stdin.resume()
 stdin.setEncoding('utf8')
 
 function draw(map){
+    clear()
     map.forEach(row=>{
         row.forEach(point=>{
             if(point === 0){
-                stdout.write('+')
+                stdout.write(' ')
             }else{
-                stdout.write('O')
+                stdout.write('█')
             }
         })
-        stdout.write('\n')
+        stdout.write('\r\n')
     })
-    up(map.length)
-    left(map[0].length)
+ 
 }
 
 
@@ -37,7 +37,9 @@ function right(n = 1){
 function left(n = 1){
     stdout.write('\033['+ n +'D')
 }
-
+function clear(){
+    stdout.write('\033c')
+}
 function getChar(){
     return new Promise(resolve=>{
         stdin.once('data',(key)=>{
