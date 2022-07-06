@@ -1,6 +1,6 @@
-const { rotate} = require('./matrix')
+const { rotate, rotate270 } = require('./matrix')
 class Box {
-  constructor(shape,rotateStrategys) {
+  constructor(shape, rotateStrategys) {
     this.x = 0;
     this.y = -1;
     this.rotateIndex = 0;
@@ -9,9 +9,9 @@ class Box {
     this.rotateStrategys = rotateStrategys;
   }
 
-  
+
   rotate() {
-    if(!this.rotateStrategys) return 
+    if (!this.rotateStrategys) return
 
     const rotate = this.rotateStrategys[this.rotateIndex];
 
@@ -22,62 +22,70 @@ class Box {
 }
 
 
-const boxInfos = {
-  // 1: {
-  //   shape: [
-  //     [1,1,0,0],
-  //     [1,1,1,1],
-  //     [0,0,1,1],
-  //     [0,0,0,0]
-  //   ],
-  //   // 90 -> 270
-  //   rotateStrategy: [
-  //     ()=>   
-  //     [
-  //       [1,1,0,0],
-  //       [1,1,1,1],
-  //       [0,0,1,1],
-  //       [0,0,0,0]
-  //     ],
-  //     ()=>   
-  //     [
-  //     [0,0,1,1,1,1],
-  //     [1,1,1,1,0,0],
-  //     [0,0,0,0,0,0],
-  //     [0,0,0,0,0,0],
-  //     [0,0,0,0,0,0],
-  //     [0,0,0,0,0,0],
-  //     ],
-  //     ()=> 
-  //     [
-  //     [1,1,1,1,0,0],
-  //     [0,0,1,1,1,1],
-  //     [0,0,0,0,0,0],
-  //     [0,0,0,0,0,0],
-  //     [0,0,0,0,0,0],
-  //     [0,0,0,0,0,0],
-  //     ],
-  // ],
-  // },
-  1: {
+const boxsInfo = {
+  0: {
+    type: 0,
     shape: [
-      [1, 1,1,1],
-      [1, 1,1,1],
-      [0, 0,0,0],
-      [0, 0,0,0],
+      [1, 1],
+      [1, 1],
     ],
+  },
+  1: {
+    type: 1,
+    shape: [
+      [0, 1, 1],
+      [1, 1, 0],
+      [0, 0, 0],
+    ],
+    rotateStrategy: [rotate, rotate270],
+  },
+  2: {
+    type: 2,
+    shape: [
+      [5, 5, 5],
+      [0, 5, 0],
+      [0, 0, 0],
+    ],
+    rotateStrategy: [rotate, rotate, rotate, rotate],
+  },
+  3: {
+    type: 3,
+    shape: [
+      [0, 7, 0, 0],
+      [0, 7, 0, 0],
+      [0, 7, 0, 0],
+      [0, 7, 0, 0],
+    ],
+    rotateStrategy: [rotate, rotate270],
+  },
+  4: {
+    type: 4,
+    shape: [
+      [4, 0, 0],
+      [4, 0, 0],
+      [4, 4, 0],
+    ],
+    rotateStrategy: [rotate, rotate, rotate, rotate],
+  },
+  5: {
+    type: 5,
+    shape: [
+      [0, 0, 6],
+      [0, 0, 6],
+      [0, 6, 6],
+    ],
+    rotateStrategy: [rotate, rotate, rotate, rotate],
   },
 };
 
-
 // 随机创建box
 function createBox() {
-  const len = Object.keys(boxInfos).length;
-  const key = Math.floor(Math.random() * len) + 1;
+  const len = Object.keys(boxsInfo).length ;
+  const index = Math.floor(Math.random() * len);
 
-  const boxInfo = boxInfos[key];
+  const boxInfo = boxsInfo[index];
 
-  return new Box(boxInfo.shape,boxInfo.rotateStrategy);
+  return new Box(boxInfo.shape, boxInfo.rotateStrategy);
 }
 
 module.exports = {

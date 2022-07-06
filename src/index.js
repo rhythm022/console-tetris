@@ -1,68 +1,60 @@
-// 游戏
+const { draw } = require("./console");
 const { createPlayground, mendPlayground, merge } = require("./playground");
 const { createBox } = require("./Box");
-const { ticktock, stopTick } = require("./ticktock");
+const { tock, stopTock } = require("./ticktock");
 const { intervaler } = require("./utils");
 const { listenKey } = require('./keyboard')
-const { display } = require('./display')
 const {
   leftMoveBox,
   rightMoveBox,
-  bottomMoveBox
+  downMoveBox
 } = require('./handlers')
-const { superUpSpeed, resetSpeed } = require("./gameState");
-const needDownMove = intervaler(1000);
+const { superQuickSpeed, quickerSpeed, resetSpeed, getDownInterval } = require("./speed");
+const { gameRow, gameCol } = require("./config");
+const needDownMove = intervaler();
 
 let activeBox;
 let playground;
 
 function main() {
-  playground = createPlayground(8, 8);
+  playground = createPlayground(gameCol, gameRow);
   activeBox = createBox();
 
-  display(() => merge(activeBox, playground))
-
   listenKey({
+    space: () => activeBox.rotate(),
     left: () => leftMoveBox(activeBox, playground),
     right: () => rightMoveBox(activeBox, playground),
-    up: () => activeBox.rotate(),
-    space: () => activeBox.rotate(),
-    down: superUpSpeed,
+    up: () => { superQuickSpeed(); flush() },
+    down: () => { quickerSpeed(); flush() },
     esc: () => process.exit(0),
   })
 
-  ticktock(d => {
-    if (needDownMove(d)) {
-      const downMoved = bottomMoveBox(activeBox, playground);
 
-      if (!downMoved) {
-        resetSpeed();
+  tock(d => {
+    if (needDownMove(d, getDownInterval())) {
+      const canDown = downMoveBox(activeBox, playground);
+      if (!canDown) {
         mendPlayground(activeBox, playground);
-
+        flush()
 
         if (activeBox.y < 0) {
-          gameOver()
+          stopTock();
+          console.log("\r\n👻 💀 👽 Game Over 👾 🤖 🎃");
         } else {
+          resetSpeed();
           activeBox = createBox();
 
         }
+      }else{
+        flush()
       }
     }
   });
-
 }
 
-
-function gameOver() {
-  // 清理 ticker
-  stopTick();
-
-  setTimeout(() => {
-    console.log("game over");
-
-  })
+function flush() {
+  draw(merge(activeBox, playground))
 }
-
 
 
 main()

@@ -1,31 +1,28 @@
-const handlers = [];
-const T = 0
+const T = 16
+let tockIds = []
 
-let id = setTimeout(tick, T);
+function tock(fn, time = T) {
+  let prevTime = Date.now()
 
+  const id = setInterval(() => {
+    let present = Date.now()
 
-let startTime = Date.now();
-function tick() {
-  handlers.forEach(h => {
-    h(Date.now() - startTime);
-  });
+    fn(present - prevTime)
+    prevTime = present
+  }, time)
 
-  startTime = Date.now();
-  id = setTimeout(tick, T);
+  tockIds.push(id)
+  return id
 };
 
+function stopTock() {
+  tockIds.forEach(id => {
+    clearTimeout(id)
 
-function ticktock(fn) {
-  handlers.push(fn);
+  })
 }
-
-function stopTick() {
-  handlers.length = 0
-  clearTimeout(id)
-}
-
 
 module.exports = {
-  ticktock,
-  stopTick,
+  tock,
+  stopTock,
 }

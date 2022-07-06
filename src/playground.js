@@ -1,10 +1,8 @@
-const { gameRow, gameCol } = require("./config");
-
 function createPlayground(x, y) {
   const res = []
-  for (let i = 0; i < x; i++) {
+  for (let i = 0; i < y; i++) {
     res[i] = [];
-    for (let j = 0; j < y; j++) {
+    for (let j = 0; j < x; j++) {
       res[i][j] = 0;
     }
   }

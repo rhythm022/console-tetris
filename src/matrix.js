@@ -1,4 +1,4 @@
- function getBottomPoints(matrix) {
+function getBottomPoints(matrix) {
   const row = matrix.length;
   const col = matrix[0].length;
   let r = [];
@@ -19,7 +19,7 @@
   return r;
 }
 
- function getLeftPoints(matrix) {
+function getLeftPoints(matrix) {
   const row = matrix.length;
   const col = matrix[0].length;
 
@@ -40,7 +40,7 @@
   return r;
 }
 
- function getRightPoints(matrix) {
+function getRightPoints(matrix) {
   const row = matrix.length;
   const col = matrix[0].length;
 
@@ -60,28 +60,64 @@
   return r;
 }
 
- function rotate(matrix) {
-  // 列 = 行
-  // 行 = n -1 - 列（j）; n 表示总行数
-  const row = matrix.length;
-  const col = matrix[0].length;
 
-  const r = [];
 
-  for (let i = 0; i < row; i++) {
-    for (let j = 0; j < col; j++) {
-      var k = row - 1 - j;
-      if (!r[k]) {
-        r[k] = [];
+function rotate(matrix) {
+  //逆时针旋转 90 度
+  //列 = 行
+  //行 = n - 1 - 列(j);  n表示总行数
+  var temp = [];
+  var len = matrix.length;
+  for (var i = 0; i < len; i++) {
+    for (var j = 0; j < len; j++) {
+      var k = len - 1 - j;
+      if (!temp[k]) {
+        temp[k] = [];
       }
-      // 老的行变成列
-      r[k][i] = matrix[i][j];
+      temp[k][i] = matrix[i][j];
     }
   }
 
-  return r;
+  return temp;
 }
 
+function rotate180(matrix) {
+  //逆时针旋转 180 度
+  //行 = h - 1 - 行(i);  h表示总行数
+  //列 = n - 1 - 列(j);  n表示总列数
+  var temp = [];
+  var len = matrix.length;
+  for (var i = 0; i < len; i++) {
+    for (var j = 0; j < len; j++) {
+      var k = len - 1 - i;
+      if (!temp[k]) {
+        temp[k] = [];
+      }
+      temp[k][len - 1 - j] = matrix[i][j];
+    }
+  }
+
+  return temp;
+}
+
+function rotate270(matrix) {
+  //逆时针旋转 270 度
+  //行 = 列
+  //列 = n - 1 - 行(i);  n表示总列数
+  var temp = [];
+  var len = matrix.length;
+  for (var i = 0; i < len; i++) {
+    for (var j = 0; j < len; j++) {
+      var k = len - 1 - i;
+      if (!temp[j]) {
+        temp[j] = [];
+      }
+      temp[j][k] = matrix[i][j];
+    }
+  }
+
+  return temp;
+}
 
 
 module.exports = {
@@ -89,4 +125,6 @@ module.exports = {
   getLeftPoints,
   getRightPoints,
   rotate,
+  rotate180,
+  rotate270,
 }

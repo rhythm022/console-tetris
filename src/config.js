@@ -1,10 +1,10 @@
- const gameRow = 8;
- const gameCol = 8;
+ const gameRow = 20;
+ const gameCol = 20;
 
- const gameDownIntervalTime = 1000;
+ const downIntervalTime = 1000;
 
 module.exports = {
     gameRow,
     gameCol,
-    gameDownIntervalTime,
+    downIntervalTime,
 }

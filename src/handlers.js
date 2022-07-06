@@ -11,13 +11,13 @@ const { removeTicker } = require("./ticktock");
 
 function leftMoveBox(box, area) {
     if (hitLeftBoundary(box) || hitLeftBox(box, area)) return false;
-    box.x -= 2;
+    box.x--;
 }
 function rightMoveBox(box) {
     if (hitRightBoundary(box)) return false;
-    box.x += 2;
+    box.x++;
 }
-function bottomMoveBox(box, area) {
+function downMoveBox(box, area) {
     if (hitBottomBoundary(box) || hitBottomBox(box, area)) return false;
     box.y++;
     return true
@@ -27,5 +27,5 @@ function bottomMoveBox(box, area) {
 module.exports = {
     leftMoveBox,
     rightMoveBox,
-    bottomMoveBox
+    downMoveBox
 }
