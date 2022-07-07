@@ -1,3 +1,5 @@
+#! /usr/bin/env node
+
 const { draw, listenKey } = require("./console");
 const { createPlayground } = require("./playground");
 const { createSpeed } = require("./utils/speed");
