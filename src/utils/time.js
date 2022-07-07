@@ -1,12 +1,12 @@
 const intervalToDuration = require('date-fns/intervalToDuration')
 
 
-function intervaler() {
+function createTiming(speed) {
   let t = 0;
-  return (delta, targetTime) => {
+  return (delta) => {
     t += delta;
-    
-    if (t >= targetTime) {
+
+    if (t >= speed.interval) {
       t = 0;
       return true;
     }
@@ -15,18 +15,18 @@ function intervaler() {
 }
 
 
-function timeUse(base = Date.now()){
-  return function (){
+function timeUse(base = Date.now()) {
+  return function () {
     const t = intervalToDuration({
       start: base,
       end: Date.now()
     })
-  
+
     return `${t.hours}:${t.minutes}:${t.seconds}`
   }
 }
 
 module.exports = {
-  intervaler,
+  createTiming,
   timeUse
 }

@@ -1,57 +1,50 @@
 const { draw, listenKey } = require("./console");
-const { createPlayground, mendPlayground, merge } = require("./playground");
-const { createBox } = require("./box");
+const { createPlayground } = require("./playground");
+const { createSpeed } = require("./utils/speed");
 const { tock } = require("./utils/ticktock");
-const { intervaler } = require("./utils/time");
-const {
-  leftMoveBox,
-  rightMoveBox,
-  downMoveBox
-} = require('./handlers')
-const { superQuickSpeed, quickerSpeed, resetSpeed, getDownInterval } = require("./speed");
-const { gameRow, gameCol } = require("./utils/config");
-const needDownMove = intervaler();
+const { createTiming } = require("./utils/time");
+const { gameRow, gameCol, boxDownIntervalTime } = require("./utils/config");
 
-let activeBox;
-let playground;
 
 function main() {
-  playground = createPlayground(gameCol, gameRow);
-  activeBox = createBox();
+  const speed = createSpeed(boxDownIntervalTime)
+  const timing = createTiming(speed);
+
+  const playground = createPlayground(gameCol, gameRow);
+  playground.enterBox();
 
   listenKey({
-    space: () => activeBox.rotate(),
-    left: () => leftMoveBox(activeBox, playground),
-    right: () => rightMoveBox(activeBox, playground),
-    up: superQuickSpeed,
-    down: quickerSpeed,
+    left: playground.leftMoveBox,
+    right: playground.rightMoveBox,
+    space: playground.rotateBox,
+    up: speed.setHighSpeed,
+    down: speed.setQuicker,
     esc: gameOver,
   })
 
 
-  tock(d => {
-    if (needDownMove(d, getDownInterval())) {
-      const canDown = downMoveBox(activeBox, playground);
-      if (!canDown) {
-        mendPlayground(activeBox, playground);
-        flush()
+  tock(timeSlice => {
+    if (timing(timeSlice)) {
+      const down = playground.downMoveBox();
+      if (down) {// active box downing
+        draw(playground.view)
 
-        if (activeBox.y < 0) {
-          gameOver()
+      } else {
+        playground.mendPlayground();
+        draw(playground.view)
+
+        if (!playground.isBoxBeyondPlayground) {// will enter next box
+          speed.restore();
+          playground.enterBox();
+
         } else {
-          resetSpeed();
-          activeBox = createBox();
+          gameOver()
 
         }
-      } else {
-        flush()
       }
+
     }
   });
-}
-
-function flush() {
-  draw(merge(activeBox, playground))
 }
 
 function gameOver() {
