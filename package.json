@@ -1,8 +1,8 @@
 {
   "name": "console-tetris",
   "version": "1.0.0",
-  "description": "",
-  "main": "src/index.js",
+  "description": "tetris in cli",
+  "main": "./src/index.js",
   "scripts": {
     "play": "node ./src/index.js"
   },
