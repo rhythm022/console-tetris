@@ -1,4 +1,4 @@
-const { rotate, rotate270 } = require('./matrix')
+const { rotate, rotate270 } = require('./utils/matrix')
 class Box {
   constructor(shape, rotateStrategys) {
     this.x = 0;
@@ -89,6 +89,5 @@ function createBox() {
 }
 
 module.exports = {
-  Box,
   createBox
 }

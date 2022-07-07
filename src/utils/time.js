@@ -15,13 +15,15 @@ function intervaler() {
 }
 
 
-function timeUse(base){
-  const t = intervalToDuration({
-    start: base,
-    end: Date.now()
-  })
-
-  return `${t.hours}:${t.minutes}:${t.seconds}`
+function timeUse(base = Date.now()){
+  return function (){
+    const t = intervalToDuration({
+      start: base,
+      end: Date.now()
+    })
+  
+    return `${t.hours}:${t.minutes}:${t.seconds}`
+  }
 }
 
 module.exports = {

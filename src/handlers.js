@@ -1,24 +1,23 @@
 const {
-    hitBottomBoundary,
+    hitLeftBox,
     hitLeftBoundary,
+    hitRightBox,
     hitRightBoundary,
     hitBottomBox,
-    hitLeftBox,
-} = require("./hit");
-const { removeTicker } = require("./ticktock");
-
+    hitBottomBoundary,
+} = require("./utils/hit");
 
 
 function leftMoveBox(box, area) {
-    if (hitLeftBoundary(box) || hitLeftBox(box, area)) return false;
+    if (hitLeftBoundary(box, area) || hitLeftBox(box, area)) return false;
     box.x--;
 }
-function rightMoveBox(box) {
-    if (hitRightBoundary(box)) return false;
+function rightMoveBox(box, area) {
+    if (hitRightBoundary(box, area)|| hitRightBox(box, area)) return false;
     box.x++;
 }
 function downMoveBox(box, area) {
-    if (hitBottomBoundary(box) || hitBottomBox(box, area)) return false;
+    if (hitBottomBoundary(box, area) || hitBottomBox(box, area)) return false;
     box.y++;
     return true
 }

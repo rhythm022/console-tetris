@@ -1,16 +1,15 @@
-const { draw } = require("./console");
+const { draw, listenKey } = require("./console");
 const { createPlayground, mendPlayground, merge } = require("./playground");
-const { createBox } = require("./Box");
-const { tock, stopTock } = require("./ticktock");
-const { intervaler } = require("./utils");
-const { listenKey } = require('./keyboard')
+const { createBox } = require("./box");
+const { tock } = require("./utils/ticktock");
+const { intervaler } = require("./utils/time");
 const {
   leftMoveBox,
   rightMoveBox,
   downMoveBox
 } = require('./handlers')
 const { superQuickSpeed, quickerSpeed, resetSpeed, getDownInterval } = require("./speed");
-const { gameRow, gameCol } = require("./config");
+const { gameRow, gameCol } = require("./utils/config");
 const needDownMove = intervaler();
 
 let activeBox;
@@ -24,9 +23,9 @@ function main() {
     space: () => activeBox.rotate(),
     left: () => leftMoveBox(activeBox, playground),
     right: () => rightMoveBox(activeBox, playground),
-    up: () => { superQuickSpeed(); flush() },
-    down: () => { quickerSpeed(); flush() },
-    esc: () => process.exit(0),
+    up: superQuickSpeed,
+    down: quickerSpeed,
+    esc: gameOver,
   })
 
 
@@ -38,14 +37,13 @@ function main() {
         flush()
 
         if (activeBox.y < 0) {
-          stopTock();
-          console.log("\r\n👻 💀 👽 Game Over 👾 🤖 🎃");
+          gameOver()
         } else {
           resetSpeed();
           activeBox = createBox();
 
         }
-      }else{
+      } else {
         flush()
       }
     }
@@ -56,5 +54,9 @@ function flush() {
   draw(merge(activeBox, playground))
 }
 
+function gameOver() {
+  console.log("\r\n　　　　👻 💀 👽 游戏结束 👾 🤖 🎃");
+  process.exit(0)
+}
 
 main()

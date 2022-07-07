@@ -1,34 +1,27 @@
 function getBottomPoints(matrix) {
-  const row = matrix.length;
+  let result = [];
   const col = matrix[0].length;
-  let r = [];
+  const row = matrix.length;
   for (let i = 0; i < col; i++) {
-    // 倒着来，从后面往前面数
     for (let j = row - 1; j >= 0; j--) {
-      const v = matrix[j][i];
-      if (v > 0) {
-        r.push({
-          x: i,
-          y: j,
-        });
+      const point = matrix[j][i];
+      if (point) {
+        result.push({ x: i, y: j });
         break;
       }
     }
   }
-
-  return r;
+  return result;
 }
 
 function getLeftPoints(matrix) {
-  const row = matrix.length;
+  let result = [];
   const col = matrix[0].length;
-
-  let r = [];
+  const row = matrix.length;
   for (let i = 0; i < row; i++) {
     for (let j = 0; j < col; j++) {
-      const v = matrix[i][j];
-      if (v > 0) {
-        r.push({
+      if (matrix[i][j]) {
+        result.push({
           x: j,
           y: i,
         });
@@ -36,19 +29,18 @@ function getLeftPoints(matrix) {
       }
     }
   }
-
-  return r;
+  return result;
 }
 
 function getRightPoints(matrix) {
-  const row = matrix.length;
+  let result = [];
   const col = matrix[0].length;
+  const row = matrix.length;
 
-  let r = [];
   for (let i = 0; i < row; i++) {
     for (let j = col - 1; j >= 0; j--) {
-      if (matrix[i][j] > 0) {
-        r.push({
+      if (matrix[i][j]) {
+        result.push({
           x: j,
           y: i,
         });
@@ -56,8 +48,17 @@ function getRightPoints(matrix) {
       }
     }
   }
+  return result;
+}
 
-  return r;
+const mapFn = {
+  left: getLeftPoints,
+  right: getRightPoints,
+  bottom: getBottomPoints,
+};
+
+function getPointsHandler(direction) {
+  return mapFn[direction];
 }
 
 
@@ -121,9 +122,7 @@ function rotate270(matrix) {
 
 
 module.exports = {
-  getBottomPoints,
-  getLeftPoints,
-  getRightPoints,
+  getPointsHandler,
   rotate,
   rotate180,
   rotate270,

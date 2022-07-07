@@ -1,24 +1,22 @@
-const { downIntervalTime } = require('./config')
-const minVal = 300;
+const { downIntervalTime } = require('./utils/config')
+const MIN_VAL = 300;
+const FACTOR = 0.5
 
-let factor = 0.5
 let _downIntervalTime = downIntervalTime
 
 function getDownInterval() {
   return _downIntervalTime
 }
 function quickerSpeed() {
-  if (_downIntervalTime > minVal) {
-    _downIntervalTime *= factor;
+  if (_downIntervalTime > MIN_VAL) {
+    _downIntervalTime *= FACTOR;
 
   }
 }
-
 function resetSpeed() {
   _downIntervalTime = downIntervalTime;
 
 }
-
 function superQuickSpeed() {
   _downIntervalTime = 1;
 }
