@@ -27,8 +27,10 @@ npm run play
 
 ### 游戏演示
 [📺 bilibili](https://www.bilibili.com/video/BV16r4y1u753/)
-
-![image](https://github.com/rhythm022/console-tetris/blob/main/docs/pic.gif?raw=true)
+#### Mac 平台
+![image](https://github.com/rhythm022/console-tetris/blob/main/docs/pic-mac.gif?raw=true)
+#### Windows 平台
+![image](https://github.com/rhythm022/console-tetris/blob/main/docs/pic-win.gif?raw=true)
 
 ### 感谢
 winter
