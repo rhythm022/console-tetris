@@ -4,11 +4,11 @@
 
 
 ### 开启游戏
-```js
+```bash
 npx console-tetris
 ```
 或
-```js
+```bash
 git clone https://github.com/rhythm022/console-tetris
 cd console-tetris
 npm i
